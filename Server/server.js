@@ -20,7 +20,7 @@ var corsOptions = {
 app.use(cors(corsOptions));
 
 app.use(bodyParser.json());
-// app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({extended: true}));
 
 
 app.use(express.static(__dirname + '/../Public'));
@@ -57,3 +57,28 @@ app.get('/api/reviews/:id', (req, res) => {
     }
   })
 });
+
+//Post request adds a new review to a specific product
+app.post('/api/reviews/:id', (req, res) => {
+  var postData = req.body
+  postData.productId = req.params.id;
+  Reviews.create(postData, function(err, result) {
+    if (err) {
+      console.error(err)
+      return;
+    } else {
+      Reviews.find({ productId : ` ${req.params.id} `}, function(err, result) {
+        if (err) {
+          console.error(err);
+          return;
+        } else {
+          res.redirect(`/${req.params.id}`)
+        }
+      })
+    }
+  })
+})
+
+// app.post('/api/reivews')
+// app.put - updating
+// app.delete - deletes a review

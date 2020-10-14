@@ -15,7 +15,7 @@ var productIds = generateIds(100);
 
 var generateReviews = function(numReviews) {
   var data = [];
-  var uniq = 0;
+  // var uniq = 0;
   var counter = 0;
 
   var stars = {
@@ -42,10 +42,10 @@ var generateReviews = function(numReviews) {
 
 
   for (var i = 0; i < numReviews; i++) {
-    uniq++;
+    // uniq++;
     counter++;
     var fakeReview = {
-      _id: uniq,
+      // _id: uniq,
       author: faker.name.firstName(),
       stars: faker.random.number(stars), // 0 through 5
       body: faker.lorem.paragraph(),
@@ -56,7 +56,7 @@ var generateReviews = function(numReviews) {
       style: faker.random.number(stars), // 0-5
       value: faker.random.number(stars), // 0-5
       sizing: faker.random.number(sizing), // [too small, too big, true to size]
-      photos: ['null'], //img links //======= TO DO ======
+      // photos: ['null'], //img links //======= TO DO ======
       helpfulVotes: faker.random.number(stars), // number of "helpful" votes
     }
     if (counter < 20) {

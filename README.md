@@ -12,6 +12,6 @@ In another terminal window, seed the database by typing "npm run db:seed"
 
 Have webpack watch the files via "npm run build"
 
-Reviews should now be rendered on port 3001.
+Reviews should now be rendered on port 3004.
 
 
