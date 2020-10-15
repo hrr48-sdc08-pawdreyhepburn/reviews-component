@@ -70,10 +70,24 @@ var generateReviews = function(numReviews) {
 
 const fakeReviews = generateReviews(2000);
 
-Reviews.create(fakeReviews)
-  .then(() => {
-    mongoose.disconnect();
-  })
-
-console.log('DB SEEDED');
+//remove any previously stored data
+Reviews.deleteMany({})
+.then(() => {
+  console.log('DB Empty')
+})
+.then(() => {
+  Reviews.create(fakeReviews)
+    .then(() => {
+      console.log('DB SEEDED');
+    })
+    .then(() => {
+      mongoose.disconnect();
+    })
+    .catch((err) => {
+      console.error('ERROR with seeding database');
+    })
+})
+.catch((err) => {
+  console.error('ERROR with removing data');
+})
 
