@@ -94,4 +94,13 @@ app.put('/api/reviews/:id/:reviewId', (req, res) => {
 
 
 //Delete reques allows a user to delete review
-// app.delete - deletes a review
+app.delete('/api/reviews/:id/:reviewId', (req, res) => {
+  Reviews.deleteOne({ _id: req.params.reviewId}, function(err, result) {
+    if (err) {
+      console.error(err);
+      res.json('Cannot delete');
+    } else {
+      res.redirect(`/${req.params.id}`)
+    }
+  })
+})
