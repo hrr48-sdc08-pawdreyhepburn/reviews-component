@@ -29,12 +29,13 @@ app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
 });
 
-app.get('/api/reviews', (req, res) => {
-  Reviews.find({})
-  .then(function(results) {
-    res.send(results);
-  })
-})
+// this get request isn't used
+// app.get('/api/reviews', (req, res) => {
+//   Reviews.find({})
+//   .then(function(results) {
+//     res.send(results);
+//   })
+// })
 
 app.get('/:id', (req, res) => {
   Reviews.find({ productId : ` ${req.params.id} ` }, function(err, result) {
@@ -65,12 +66,12 @@ app.post('/api/reviews/:id', (req, res) => {
   Reviews.create(postData, function(err, result) {
     if (err) {
       console.error(err)
-      return;
+      res.json('Review was not created.');
     } else {
       Reviews.find({ productId : ` ${req.params.id} `}, function(err, result) {
         if (err) {
           console.error(err);
-          return;
+          res.json('Reviews were not found.');
         } else {
           res.redirect(`/${req.params.id}`)
         }
@@ -79,6 +80,18 @@ app.post('/api/reviews/:id', (req, res) => {
   })
 })
 
-// app.post('/api/reivews')
-// app.put - updating
+//Put request allows a user to update review and returns to product reviews
+app.put('/api/reviews/:id/:reviewId', (req, res) => {
+  Reviews.update({_id: req.params.reviewId}, req.body, function(err, result) {
+    if (err) {
+      console.error(err);
+      res.json('Cannot update');
+    } else {
+      res.redirect(`/${req.params.id}`)
+    }
+  })
+})
+
+
+//Delete reques allows a user to delete review
 // app.delete - deletes a review
