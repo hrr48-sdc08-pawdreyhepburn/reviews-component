@@ -3,7 +3,7 @@ const client = require('../index.js');
 module.exports = {
   getAll: (productId, callback) => {
     var selectQuery = `
-    SELECT * FROM reviews WHERE productId = ${productId}
+      SELECT * FROM reviews WHERE productId = ${productId}
     `
     client.query(selectQuery)
     .then((results)=>{

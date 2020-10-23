@@ -37,7 +37,6 @@ app.get('/api/reviews/:productid', (req, res) => {
 })
 
 app.post('/api/reviews/:productid', (req, res) => {
-  console.log('here', req.body)
   reviews.addReview(req.params.productid, req.body, () => {
     res.send('Product Review Added')
   })
