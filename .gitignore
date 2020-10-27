@@ -1,2 +1,5 @@
 node_modules
 /data/
+newrelic.js
+*.log
+.DS_Store

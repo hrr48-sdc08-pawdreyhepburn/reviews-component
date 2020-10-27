@@ -1,7 +1,9 @@
+require('newrelic');
 const express = require('express');
 const bodyParser = require('body-parser');
 const reviews = require('../database/controllers/reviews.js');
 const path = require('path');
+const cors = require('cors');
 const app = express();
 const port = 3004;
 
@@ -9,6 +11,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
 app.use(express.static(path.join(__dirname, '../Public')));
+app.use(cors());
 
 app.get('/:productid', (req, res) => {
   const fileName = 'index.html';
@@ -31,13 +34,20 @@ app.get('/api/reviews/:productid', (req, res) => {
     results.rows.forEach((result) => {
       result.createdAt = result.createdat.toISOString().substring(0, 10);
       result.author = result.username;
+      result.wouldRecommend = result.wouldrecommend;
+      result.stars = result.overall;
+      result.helpfulVotes = result.helpfulvotes
     })
-    res.send(results.rows)
+    console.log('GET', req.params.productid);
+    res.send(results.rows);
   });
 })
 
 app.post('/api/reviews/:productid', (req, res) => {
+  const d = new Date();
+  req.body.createdAt = d.toISOString().substring(0, 10);
   reviews.addReview(req.params.productid, req.body, () => {
+    console.log('POST', req.params.productid)
     res.send('Product Review Added')
   })
 })

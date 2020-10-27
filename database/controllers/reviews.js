@@ -19,7 +19,6 @@ module.exports = {
     `
     client.query(insertQuery)
     .then((result) => {
-      console.log('result from query', result)
       callback()
     })
     .catch(err => {
