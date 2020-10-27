@@ -1,14 +1,14 @@
-const client = require('./index.js')
+const client = require('./index.js');
 const path = require('path');
 const { performance } = require('perf_hooks');
 
 
-const reviewsLocation = path.join(__dirname, '../data/reviews1M.csv');
+const reviewsLocation = path.join(__dirname, '../data/reviews.csv');
 
 
 
 const copyReviewsCSV = `
-  COPY reviews1M from '${reviewsLocation}' DELIMITER ',' csv header;
+  COPY reviews from '${reviewsLocation}' DELIMITER ',' csv header;
 `;
 
 const createReviewsTable = `
@@ -30,10 +30,10 @@ const createReviewsTable = `
 `;
 
 const reviewIdSquence = `
-  CREATE SEQUENCE reviews1M_sequence start 1000000 increment 1;
+  CREATE SEQUENCE reviews_sequence start 100000000 increment 1;
 `
 const createIndex = `
-  CREATE INDEX idx_reviews1M_productId on reviews(productId);
+  CREATE INDEX idx_reviews_productId on reviews(productId);
 `
 
 var t0 = performance.now();
